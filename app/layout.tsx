@@ -4,6 +4,8 @@ import "./globals.css";
 
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/navbar";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,44 +15,41 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/favicon-dark.svg',
-        media: '(prefers-color-scheme: dark)',
+        url: "/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
       },
       {
-        url: '/favicon-light.svg',
-        media: '(prefers-color-scheme: light)',
+        url: "/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
       },
-    ]
-  }
+    ],
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} dark grid grid-rows-[80px,1fr,30px] min-h-screen`}
-      >
-        <header>
-          <Navbar />
-        </header>
-        <main>
-          {children}
-        </main>
-        <footer>
-          <div
-            className="container text-center"
-          >
-            <p>
-              © {new Date().getFullYear()} - Turnos app
-            </p>
-          </div>
-        </footer>
-        <Toaster />
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="es">
+        <body
+          className={`${inter.className} dark grid grid-rows-[auto,1fr,auto] min-h-screen`}
+        >
+          <header>
+            <Navbar />
+          </header>
+          <main className="flex items-center justify-center">{children}</main>
+          <footer>
+            <div className="container text-center border-t p-4">
+              <p>© {new Date().getFullYear()} - Turnos app</p>
+            </div>
+          </footer>
+          <Toaster />
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

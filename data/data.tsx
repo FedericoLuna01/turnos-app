@@ -3,7 +3,7 @@ import { UserSettings } from "@/types/types";
 export const userSettings: UserSettings = {
   disabledDates: [],
   timeGap: 30,
-  avalibleDays: {
+  availableDays: {
     monday: true,
     tuesday: true,
     wednesday: true,
@@ -12,10 +12,8 @@ export const userSettings: UserSettings = {
     saturday: false,
     sunday: false,
   },
-  avalibleHours: {
-    monday: [
-      { start: "09:00", end: "13:00" },
-    ],
+  availableHours: {
+    monday: [{ start: "09:00", end: "13:00" }],
     tuesday: [
       { start: "09:00", end: "13:00" },
       { start: "15:00", end: "18:00" },
@@ -34,5 +32,20 @@ export const userSettings: UserSettings = {
     ],
     saturday: [],
     sunday: [],
-  }
-}
+  },
+};
+
+export const NavbarLinks = [
+  {
+    label: "Sacar turno",
+    href: "/",
+  },
+  {
+    label: "Lista de turnos",
+    href: "/turnos",
+  },
+  {
+    label: "Calendario",
+    href: "/calendario",
+  },
+];

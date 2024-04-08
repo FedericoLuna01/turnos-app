@@ -1,5 +1,11 @@
 import { CalendarForm } from "@/components/forms/appointment-form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import prismadb from "@/lib/db";
 
 export default async function Home() {
@@ -8,23 +14,17 @@ export default async function Home() {
       date: {
         gt: new Date(),
       },
-    }
-  })
-
+    },
+  });
   return (
-    <div
-      className="flex items-center justify-center h-full"
-    >
-      <Card>
+    <div>
+      <Card className="max-w-sm">
         <CardHeader>
-          <CardTitle>
-            Pedi un turno
-          </CardTitle>
+          <CardTitle>Pide un turno</CardTitle>
+          <CardDescription>Pide un turno para tu consulta.</CardDescription>
         </CardHeader>
         <CardContent>
-          <CalendarForm
-            appointments={appointments}
-          />
+          <CalendarForm appointments={appointments} />
         </CardContent>
       </Card>
     </div>
