@@ -8,7 +8,7 @@ import { auth } from "@/auth";
 const Navbar = async () => {
   const session = await auth();
   return (
-    <nav className="flex items-center justify-between p-4 container border-b">
+    <nav className="flex items-center justify-between py-4 container border-b">
       <h1 className="text-3xl font-bold">Turnos app</h1>
       <div className="flex gap-4">
         {NavbarLinks.map((link, index) => (

@@ -17,7 +17,7 @@ export default async function Home() {
     },
   });
   return (
-    <div>
+    <div className="flex justify-center items-center h-full">
       <Card className="max-w-sm">
         <CardHeader>
           <CardTitle>Pide un turno</CardTitle>
