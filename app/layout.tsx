@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/navbar";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,18 +37,25 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang="es">
         <body
-          className={`${inter.className} dark grid grid-rows-[auto,1fr,auto] min-h-screen`}
+          className={`${inter.className} grid grid-rows-[auto,1fr,auto] min-h-screen`}
         >
-          <header>
-            <Navbar />
-          </header>
-          <main>{children}</main>
-          <footer>
-            <div className="container text-center border-t p-4">
-              <p>© {new Date().getFullYear()} - Turnos app</p>
-            </div>
-          </footer>
-          <Toaster />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <header>
+              <Navbar />
+            </header>
+            <main>{children}</main>
+            <footer>
+              <div className="container text-center border-t p-4">
+                <p>© {new Date().getFullYear()} - Turnos app</p>
+              </div>
+            </footer>
+            <Toaster />
+          </ThemeProvider>
         </body>
       </html>
     </SessionProvider>

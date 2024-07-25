@@ -3,14 +3,16 @@ import prismadb from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
-  const body: { name: string, date: Date } = await req.json()
-  const { name, date } = body
+  const body: { name: string, date: Date, professionalId: string, userId: string } = await req.json()
+  const { name, date, professionalId, userId } = body
 
   try {
     const appointment = await prismadb.appointment.create({
       data: {
         name,
-        date
+        date,
+        professionalId,
+        userId
       }
     })
 

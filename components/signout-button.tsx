@@ -11,7 +11,7 @@ const SignOutButton = () => {
       }}
     >
       <Button variant="destructive" className="w-full justify-start">
-        <LogOut className="w-4 h-4 mr-2" />
+        <LogOut className="size-4 mr-2" />
         Cerrar sesión
       </Button>
     </form>

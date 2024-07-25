@@ -96,6 +96,8 @@ export function CalendarForm({
       const res = await axios.post("/api/appointments", {
         name: data.name,
         date: formattedDate,
+        // TODO: Pasar el profesional id y de el usuario
+        // professionalId:
       });
       toast({
         title: "Form submitted!",
