@@ -23,6 +23,8 @@ export const {
     signIn: "/login",
     error: "/error",
   },
+  // TODO: Cambiar secret por una variable de entorno
+  secret: process.env.AUTH_SECRET || "default-secret",
   events: {
     async linkAccount({ user }) {
       await prismadb.user.update({

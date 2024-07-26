@@ -37,15 +37,11 @@ export const userSettings: UserSettings = {
 
 export const NavbarLinks = [
   {
-    label: "Sacar turno",
+    label: "Pedir turno",
     href: "/",
   },
   {
-    label: "Lista de turnos",
+    label: "Mis turnos",
     href: "/turnos",
-  },
-  {
-    label: "Calendario",
-    href: "/calendario",
   },
 ];

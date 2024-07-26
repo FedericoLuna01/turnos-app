@@ -8,6 +8,8 @@ import { CalendarIcon } from "lucide-react";
 import { es } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "next/navigation";
+import { type Appointment } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -37,7 +39,7 @@ import { userSettings } from "@/data/data";
 import { getUnavailableDays } from "@/utils/getUnavailableDays";
 import { getAvailableHours } from "@/utils/getAvailableHours";
 import { Input } from "../ui/input";
-import { Appointment } from "@prisma/client";
+
 
 const FormSchema = z.object({
   date: z.date({
@@ -57,6 +59,8 @@ export function CalendarForm({
   appointments: Appointment[];
 }) {
   const [times, setTimes] = useState([""]);
+
+  const { userId } = useParams()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -96,8 +100,7 @@ export function CalendarForm({
       const res = await axios.post("/api/appointments", {
         name: data.name,
         date: formattedDate,
-        // TODO: Pasar el profesional id y de el usuario
-        // professionalId:
+        professionalId: userId,
       });
       toast({
         title: "Form submitted!",

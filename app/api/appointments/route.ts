@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
 import prismadb from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
 
 export async function POST(req: Request) {
-  const body: { name: string, date: Date, professionalId: string, userId: string } = await req.json()
-  const { name, date, professionalId, userId } = body
+  const body: { name: string, date: Date, professionalId: string } = await req.json()
+  const { name, date, professionalId } = body
+  const session = await auth()
+
+  if (!session) {
+    return new NextResponse("Unauthorized", { status: 401 })
+  }
+
+  if (!professionalId) {
+    return new NextResponse("Professional ID is required", { status: 400 })
+  }
 
   try {
     const appointment = await prismadb.appointment.create({
@@ -12,12 +22,11 @@ export async function POST(req: Request) {
         name,
         date,
         professionalId,
-        userId
+        userId: session?.user?.id!
       }
     })
 
-    revalidatePath('/turnos')
-    revalidatePath('/calendario')
+    revalidatePath("/turnos")
     return NextResponse.json(appointment)
   } catch (error) {
     console.log("[APPOINTMENTS_POST] Error: ", error)

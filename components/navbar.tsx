@@ -1,10 +1,10 @@
-import React from "react";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import { NavbarLinks } from "@/data/data";
-import SignOutButton from "./signout-button";
 import { auth } from "@/auth";
+import Link from "next/link";
+
+import { Button } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
+import { NavbarLinks } from "@/data/data";
+import { UserDropdown } from "./user-dropdown";
 
 const Navbar = async () => {
   const session = await auth();
@@ -21,8 +21,17 @@ const Navbar = async () => {
             <Link href={link.href}>{link.label}</Link>
           </Button>
         ))}
+        {
+          session?.user?.role === "PROFESSIONAL" && (
+            <Button asChild variant="link">
+              <Link href="/dashboard">
+                Dashboard
+              </Link>
+            </Button>
+          )
+        }
         {session ? (
-          <SignOutButton />
+          <UserDropdown />
         ) : (
           <Button variant="secondary">
             <Link href="/login">Login</Link>
