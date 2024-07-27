@@ -1,9 +1,12 @@
-import Image from "next/image"
-
 import { Button } from "./ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { User } from "lucide-react"
+import { type Session } from "next-auth"
+import Link from "next/link"
+import { signOut } from "@/auth"
 
-export const UserDropdown = () => {
+export const UserDropdown = ({ session }: { session: Session | null }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -12,24 +15,60 @@ export const UserDropdown = () => {
           size="icon"
           className="overflow-hidden rounded-full"
         >
-          <Image
-            src="/placeholder-user.jpg"
-            width={36}
-            height={36}
-            alt="Avatar"
-            className="overflow-hidden rounded-full"
-          />
+          <Avatar>
+            {
+              session?.user?.image && (
+                <AvatarImage src={session?.user?.image} alt={`Avatar de el usuario ${session.user.name}`} />
+              )
+            }
+            <AvatarFallback>
+              <User className="size-5" />
+            </AvatarFallback>
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-36">
         <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Mis turnos</DropdownMenuItem>
-        <DropdownMenuItem>Configuración</DropdownMenuItem>
-        <DropdownMenuItem>Dashboard</DropdownMenuItem>
+        <Link
+          href='/turnos'
+        >
+          <DropdownMenuItem>
+            Mis turnos
+          </DropdownMenuItem>
+        </Link>
+        <Link
+          href='/configuracion'
+        >
+          <DropdownMenuItem>
+            Configuración
+          </DropdownMenuItem>
+        </Link>
+        {
+          session?.user?.role === 'PROFESSIONAL' && (
+            <Link
+              href='/dashboard'
+            >
+              <DropdownMenuItem>
+                Dashboard
+              </DropdownMenuItem>
+            </Link>
+          )
+        }
         <DropdownMenuSeparator />
         {/* TODO: Cambiar color a rojo */}
-        <DropdownMenuItem>Cerrar sesión</DropdownMenuItem>
+        <form
+          action={async () => {
+            "use server";
+            await signOut();
+          }}
+        >
+          <DropdownMenuItem>
+            <button>
+              Cerrar sesión
+            </button>
+          </DropdownMenuItem>
+        </form>
       </DropdownMenuContent>
     </DropdownMenu>
   )

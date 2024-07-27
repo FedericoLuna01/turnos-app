@@ -9,35 +9,39 @@ import { UserDropdown } from "./user-dropdown";
 const Navbar = async () => {
   const session = await auth();
   return (
-    <nav className="flex items-center justify-between py-4 container border-b">
-      <Link
-        href='/'
+    <nav className="flex items-center justify-between container">
+      <div
+        className="flex items-center justify-between w-full mx-auto py-4 border-b"
       >
-        <h1 className="text-3xl font-bold">Turnos app</h1>
-      </Link>
-      <div className="flex gap-4 items-center">
-        {NavbarLinks.map((link, index) => (
-          <Button asChild key={index} variant="link">
-            <Link href={link.href}>{link.label}</Link>
-          </Button>
-        ))}
-        {
-          session?.user?.role === "PROFESSIONAL" && (
-            <Button asChild variant="link">
-              <Link href="/dashboard">
-                Dashboard
-              </Link>
+        <Link
+          href='/'
+        >
+          <h1 className="text-3xl font-bold">Turnos app</h1>
+        </Link>
+        <div className="flex gap-4 items-center">
+          {NavbarLinks.map((link, index) => (
+            <Button asChild key={index} variant="link">
+              <Link href={link.href}>{link.label}</Link>
             </Button>
-          )
-        }
-        {session ? (
-          <UserDropdown />
-        ) : (
-          <Button variant="secondary">
-            <Link href="/login">Login</Link>
-          </Button>
-        )}
-        <ThemeToggle />
+          ))}
+          {
+            session?.user?.role === "PROFESSIONAL" && (
+              <Button asChild variant="link">
+                <Link href="/dashboard">
+                  Dashboard
+                </Link>
+              </Button>
+            )
+          }
+          {session ? (
+            <UserDropdown session={session} />
+          ) : (
+            <Button variant="secondary">
+              <Link href="/login">Login</Link>
+            </Button>
+          )}
+          <ThemeToggle />
+        </div>
       </div>
     </nav>
   );

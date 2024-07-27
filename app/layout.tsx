@@ -49,8 +49,10 @@ export default async function RootLayout({
               <Navbar />
             </header>
             <main>{children}</main>
-            <footer>
-              <div className="container text-center border-t p-4">
+            <footer
+              className="container"
+            >
+              <div className="text-center border-t p-4">
                 <p>© {new Date().getFullYear()} - Turnos app</p>
               </div>
             </footer>
