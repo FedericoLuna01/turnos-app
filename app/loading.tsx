@@ -7,8 +7,8 @@ export default function Loading() {
       <Skeleton className="h-1 rounded w-full"></Skeleton>
       <div className="grid grid-cols-4 gap-5 py-10">
         {
-          [...Array(5)].map((idx) => (
-            <Skeleton key={idx} className="h-52 rounded" />
+          [...Array(5)].map((_, index) => (
+            <Skeleton key={index} className="h-52 rounded" />
           ))
         }
       </div>
